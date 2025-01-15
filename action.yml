@@ -10,6 +10,10 @@ inputs:
     description: >
       The typst file to be compiled. There can be multiple ones separated by new lines.
     required: true
+  output_file:
+    description: >
+      The output PDF path(s).
+    required: true
   options:
     description: >
       Line separated array of global options to pass to typst. Compared to a CLI call, with space
