@@ -29,6 +29,7 @@ inputs:
           uses: lkndl/typst-action@main
           with:
             source_file: main.typ
+            output_file: tests/main.pdf
             options: |
               --font-path
               fonts
@@ -39,4 +40,5 @@ runs:
   image: Dockerfile
   args:
     - ${{ inputs.source_file }}
+    - ${{ inputs.output_file }}
     - ${{ inputs.options }}
