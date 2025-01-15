@@ -42,3 +42,4 @@ runs:
     - ${{ inputs.source_file }}
     - ${{ inputs.output_file }}
     - ${{ inputs.options }}
+    - ${{ inputs.output_file }}

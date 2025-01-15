@@ -30,12 +30,9 @@ def main():
     #   1. The Typst files to compile in a line separated string
     #   2. The global Typst CLI options, in a line separated string. It means each
     #      whitespace separated field should be on its own line.
-    logging.info(f"argv-all {('~').join(sys.argv)}")
     source_files = sys.argv[1].splitlines()
-    logging.info(f"argv1 {source_files}")
-    output_files = sys.argv[2].splitlines()
-    logging.info(f"argv2 {output_files}")
-    options = sys.argv[3].splitlines()
+    options = sys.argv[2].splitlines()
+    output_files = sys.argv[3].splitlines()
 
     version = subprocess.run(
         ["typst", "--version"], capture_output=True, text=True
