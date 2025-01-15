@@ -16,7 +16,7 @@ inputs:
       separated field, each file must be on its own lines. For example, to pass an additional font
       path using the --font-path global command, the CLI call is
 
-        typst --font-path fonts main.typ
+        typst compile --font-path fonts main.typ
 
       For the action, one must use one line per argument to ensure correct parsing, in the following
       form:

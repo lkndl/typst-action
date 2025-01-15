@@ -4,19 +4,19 @@ import subprocess
 import sys
 
 
-def compile(filename: str, options: list[str]) -> bool:
+def compile(in_file: str, out_file: str, options: list[str]) -> bool:
     """Compiles a Typst file with the specified global options.
 
     Returns True if the typst command exited with status 0, False otherwise.
     """
-    command = ["typst"] + ["compile", filename] + options
+    command = ["typst"] + ["compile", in_file] + options + [out_file]
     logging.debug("Running: " + " ".join(command))
 
     result = subprocess.run(command, capture_output=True, text=True)
     try:
         result.check_returncode()
     except subprocess.CalledProcessError:
-        logging.error(f"Compiling {filename} failed with stderr: \n {result.stderr}")
+        logging.error(f"Compiling {in_file} failed with stderr: \n {result.stderr}")
         return False
 
     return True
@@ -31,7 +31,8 @@ def main():
     #   2. The global Typst CLI options, in a line separated string. It means each
     #      whitespace separated field should be on its own line.
     source_files = sys.argv[1].splitlines()
-    options = sys.argv[2].splitlines()
+    output_files = sys.argv[2].splitlines()
+    options = sys.argv[3].splitlines()
 
     version = subprocess.run(
         ["typst", "--version"], capture_output=True, text=True
@@ -40,16 +41,17 @@ def main():
 
     success: dict[str, bool] = {}
 
-    for filename in source_files:
-        filename = filename.strip()
-        if filename == "":
+    for (in_file, out_file) in zip(source_files, output_files):
+        in_file = in_file.strip()
+        out_file = out_file.strip()
+        if in_file == "":
             continue
-        logging.info(f"Compiling {filename}…")
-        success[filename] = compile(filename, options)
+        logging.info(f"compiling {in_file} as {out_file}")
+        success[in_file] = compile(in_file, out_file, options)
 
     # Log status of each input files.
-    for filename, status in success.items():
-        logging.info(f"{filename}: {'✔' if status else '❌'}")
+    for in_file, status in success.items():
+        logging.info(f"{in_file}: {'✔' if status else '❌'}")
 
     if not all(success.values()):
         sys.exit(1)

@@ -4,7 +4,7 @@ jobs:
   build_multiple_files_with_options:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Self test
         id: selftest
         uses: lvignoli/typst-action@develop
